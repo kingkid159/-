@@ -3,66 +3,63 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel='stylesheet'href='./main.css?ver=2'>
+<link rel='stylesheet'href='./main.css?ver=4'>
 <script src="https://kit.fontawesome.com/d49fa1b12d.js" 
 			crossorigin="anonymous"
 ></script>
 </head>
 <body>
-	<div id='contain'>
-	<!-- left box -->
+<div id='contain'>
 	<div id='left_box'>
-			<div class='left_box__logo'>
-				<img class='left_box__img'src='../img/computer/welcome_gold.png'>
-			</div>
-			<ul class='left_box__list'>
-				<li class='list__li'>
-					<i class="fas fa-desktop"></i>
-					컴퓨터</li>
-				<li class='list__li'>리스트 2</li>
-				<li class='list__li'>리스트 3</li>
-				<li class='list__li'>
-					<i class="fas fa-cart-arrow-down"></i>
-					장바구니
-				</li>
-				<li class='list__li'>
-					<i class="fas fa-question-circle"></i>
-					문의하기
-				</li>
-			</ul>
+		<img class='left_box__logo'src='./img/welcome_gold4.png'alt='welcome'>
+		<ul class='left_box__list'>
+			<li class='list_li'>
+				<i class="fas fa-desktop"></i>
+				컴퓨터
+			</li>
+			<li class='list_li'>
+				<i class="fas fa-cart-arrow-down"></i>
+				장바구니
+			</li>
+			<li class='list_li'>
+				<i class="fas fa-receipt"></i>
+				주문내역
+			</li>
+			<li class='list_li'>
+				<i class="fas fa-question-circle"></i>
+				문의하기
+			</li>
+		</ul>
 	</div>
-	<!-- top box -->
-	<div class='top_right_contain'>
-		<div id='top_box'>
-			<span class='top_box__welcome'>환영합니다.</span>
-			<span class='tob_box__welcome'>홍길동님</span><!-- 추후 jsp로 수정 예정 -->
-			<button class='tob_box__login'>Logout</button>
-		</div>
-		<!-- right box -->
-	<div class=right_box>
-		<div class="slider">
+<div id='right_box'>
+	<div id='right_top'>
+		안녕하세요 @@님<button class='right_top__btn'>Logout</button>
+	</div>
+	<div id='right_bot'>
+	<div class="slider">
 		    <input type="radio" name="slide" id="slide1" checked>
 		    <input type="radio" name="slide" id="slide2">
 		    <input type="radio" name="slide" id="slide3">
 		    <input type="radio" name="slide" id="slide4">
 		     <input type="radio" name="slide" id="slide5">
     <ul id="imgholder" class="imgs">
-        <li><img src="../img/computer/컴퓨터 1.jpg"class='img'></li>
-        <li><img src="../img/computer/컴퓨터 2.jpg"class='img'></li>
-        <li><img src="../img/computer/컴퓨터 3.jpg"class='img'></li>
-        <li><img src='../img/computer/컴퓨터 4.jpg'class='img'></li>
-        <li><img src='../img/computer/컴퓨터 5.jpg'class='img'></li>
+        <li><img src="./img/computer/lol.jpg"class='img'></li>
+        <li><img src="./img/computer/grapic.jpg"class='img'></li>
+        <li><img src="./img/computer/work.jpg"class='img'></li>
+        <li><img src='./img/computer/grapic.png'class='img'></li>
+        <li><img src='./img/computer/programming.jpg'class='img'></li>
     </ul>
     <div class="bullets">
-        <label for="slide1">&nbsp;</label>
-        <label for="slide2">&nbsp;</label>
-        <label for="slide3">&nbsp;</label>
-        <label for="slide4">&nbsp;</label>
-        <label for="slide5">&nbsp;</label>
+        <label for="slide1">게임용PC</label>
+        <label for="slide2">그래픽전문가용</label>
+        <label for="slide3">사무용PC</label>
+        <label for="slide4">영상편집용</label>
+        <label for="slide5">프로그래밍용</label>
     </div>
 	</div>
-		</div>
-		</div>
+	
 	</div>
+</div>
+</div>
 </body>
 </html>
