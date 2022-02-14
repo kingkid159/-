@@ -44,6 +44,13 @@ public class Review {
 	public int getReadCount() {
 		return readCount;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Review [number=" + number + ", writer=" + writer + ", title=" + title + ", regDate=" + regDate
+				+ ", pno=" + pno + ", readCount=" + readCount + ", content=" + content + "]";
+	}
 	
 }
 

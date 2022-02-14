@@ -14,6 +14,10 @@ public class Writer {
 	public String getName() {
 		return name;
 	}
-	
+	@Override
+	public String toString() {
+		return "Writer [id=" + id + ", name=" + name + "]";
+	}
+
 }
 

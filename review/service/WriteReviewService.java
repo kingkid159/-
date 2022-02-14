@@ -54,7 +54,7 @@ public class WriteReviewService {
 	private Review toReview(WriteRequest request) {
 		// TODO Auto-generated method stub
 		Date now = new Date();
-		return new Review(null,request.getWriter(),null,request.getTitle(),request.getContent(),
+		return new Review(0,request.getWriter(),0,request.getTitle(),request.getContent(),
 				now,0);
 	}
 

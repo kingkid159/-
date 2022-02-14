@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%> 
+<c:set var="ctx" value="<%=request.getContextPath()%>"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +11,7 @@
 <body>
 게시글을 등록했습니다.
 <br>
-${ctxPath=pageContext.request.contextPath;}
+
 <a href='${ctxPath}/article/list.do'>[게시글 목록보기]</a>
 <a href='${ctxPath}/article/read.do?no=${newArticleNo}'>[게시글 내용보기]</a>
 </body>
