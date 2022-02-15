@@ -5,12 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jdbc.JdbcUtil;
 
 import java.sql.PreparedStatement;
 import review.model.Review;
+import review.model.Writer;
 
 public class ReviewDao {
 	public Review insert(Connection conn, Review review) throws SQLException{
@@ -26,7 +29,7 @@ public class ReviewDao {
 					+"(r_no,id,p_no,r_title,r_content,r_regdate,r_hit) "
 					+"values(review_no.nextval,?,review_no.nextval,?,?,?,?)");
 			System.out.println("review"+review.getNumber());
-			pstmt.setString(1, review.getWriter().getName());
+			pstmt.setString(1, review.getWriter().getId());
 			pstmt.setString(2,review.getTitle());
 			pstmt.setString(3, review.getContent());
 			pstmt.setTimestamp(4,toTimestamp(review.getRegDate()));
@@ -65,4 +68,63 @@ public class ReviewDao {
 	private Timestamp toTimestamp(Date date) {
 		return new Timestamp(date.getTime());
 	}
+	
+	/* review 테이블의 전체 레코드 수를 리턴 */
+	public int selectCount(Connection conn)throws SQLException{
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select count(*) from review ");
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+			return 0;
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(stmt);
+		}
+		
+	}
+	
+	public List<Review> select(Connection conn, int startRow, int size)
+	throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			/*
+			 * desc로 게시글 번호 역순처리후 limit가 4, 2이면 5번째 레코드부터 2개의 레코드인 5,4를 읽어온다
+			 */
+			pstmt = conn.prepareStatement("select * from ( select"+
+					" * from review "+
+					"order by r_no desc) where rownum <=?");
+			/* pstmt.setInt(1, startRow); */
+			pstmt.setInt(1, size);
+			rs = pstmt.executeQuery();
+			List<Review> result = new ArrayList<>(); 
+			while (rs.next()) {
+				result.add(convertReview(rs));
+			}
+			return result;
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+			}
+		
+		}
+		
+	private Review convertReview(ResultSet rs) throws SQLException{
+		return new Review(rs.getInt("r_no"),
+				new Writer(
+						rs.getNString("id")),
+						/*,rs.getNString("name"))*/
+				null, rs.getNString("r_title"),
+				rs.getNString("r_content"), toDate(rs.getTimestamp("r_regDate")),
+				rs.getInt("r_hit"));
+		
+	}
+	private Date toDate(Timestamp timestamp) {
+		return new Date (timestamp.getTime());
+	}
+	
 }

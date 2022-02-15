@@ -12,7 +12,7 @@ import review.model.Writer;
 import review.service.WriteRequest;
 import review.service.WriteReviewService;
 
-public class WriteReviewHandler implements CommandHandler{
+public class WriteReviewHandler implements CommandHandler{ 
 	private static final String FORM_VIEW = "../view/product/reviewWrite.jsp";
 	private WriteReviewService writeService = new WriteReviewService();
 	
@@ -55,8 +55,7 @@ public class WriteReviewHandler implements CommandHandler{
 	private WriteRequest createWriteRequest(User user, HttpServletRequest request) {
 		System.out.println("userid="+user);
 		return new WriteRequest(
-				new Writer(user.getId(), 
-						user.getName()),
+				new Writer(user.getId()),
 				request.getParameter("title"),
 				request.getParameter("content"));
 	}
