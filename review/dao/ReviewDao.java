@@ -73,6 +73,7 @@ public class ReviewDao {
 	public int selectCount(Connection conn)throws SQLException{
 		Statement stmt = null;
 		ResultSet rs = null;
+		
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("select count(*) from review ");
@@ -91,15 +92,22 @@ public class ReviewDao {
 	throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		System.out.println("startRow"+startRow);
+		System.out.println(("size="+size));
 		try {
 			/*
 			 * desc로 게시글 번호 역순처리후 limit가 4, 2이면 5번째 레코드부터 2개의 레코드인 5,4를 읽어온다
 			 */
-			pstmt = conn.prepareStatement("select * from ( select"+
-					" * from review "+
-					"order by r_no desc) where rownum <=?");
-			/* pstmt.setInt(1, startRow); */
-			pstmt.setInt(1, size);
+			//limit는 mysql에서 사용 가능한 방식으로 오라클에서 비슷한 기능을 구현하기 위해선 아래와 같은 코드를 사용한다
+			//where num between 시작 and 끝 으로 표현을 하는 것이니 1번에 startRow 2번에  '끝-startRow=화면에 나타낼 양'이 된다
+			pstmt = conn.prepareStatement("select * from ("+
+										"SELECT ROW_NUMBER() OVER (ORDER BY r_no desc) NUM"+
+										",review.* "+
+										"FROM review "+
+										"ORDER BY r_no desc) "+
+										"WHERE NUM BETWEEN ? AND ?");
+			pstmt.setInt(1, startRow+1);
+			pstmt.setInt(2, size);
 			rs = pstmt.executeQuery();
 			List<Review> result = new ArrayList<>(); 
 			while (rs.next()) {
@@ -127,4 +135,42 @@ public class ReviewDao {
 		return new Date (timestamp.getTime());
 	}
 	
+	// 게시글 수정기능
+	public int update(Connection conn, int no, String title, String content) throws SQLException {
+		try(PreparedStatement pstmt =
+				conn.prepareStatement("update review set r_title =?, r_content=?, r_regdate=sysdate "+
+							"where r_no = ?")){
+			pstmt.setNString(1, title);
+			pstmt.setNString(2, content);
+			pstmt.setInt(3, no);
+			return pstmt.executeUpdate();
+		}
+	}
+	//게시글 조회 기능
+	public Review selectById(Connection conn, int no) throws SQLException {
+		PreparedStatement pstmt=null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(
+					"select * from review where r_no = ?");
+			pstmt.setInt(1,no);
+			rs = pstmt.executeQuery();
+			Review review = null;
+			if(rs.next()) {
+				review=convertReview(rs);
+			}
+			return review;
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+	public void increaseReadCount(Connection conn, int no)throws SQLException{
+		try(PreparedStatement pstmt= conn.prepareStatement(
+				"update review set r_hit + 1 "+
+				"where r_no = ?")){
+			pstmt.setInt(1, no);
+			pstmt.executeUpdate();
+		}
+	}
 }

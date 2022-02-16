@@ -1,5 +1,6 @@
 package review.model;
 
+
 import java.util.Date;
 
 public class Review {
@@ -12,6 +13,7 @@ public class Review {
 	private String content;
 	
 	public Review(Integer number, Writer writer,Integer pno, String title, String content,Date regDate,int readCount) {
+		
 		this.number=number;
 		this.writer=writer;
 		this.title=title;

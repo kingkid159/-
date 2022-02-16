@@ -1,70 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%> 
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- 오라클에서 받아온 날짜 타입을 원하는 형식으로 변경할때 사용하는 jstl  -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="<%=request.getContextPath()%>"/>
+<fmt:formatDate var="frmDate" value="${review.regDate}" pattern="yyyy.MM.dd"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel='stylesheet' href='<%=request.getContextPath()%>/css/reviewList.css?ver=3'>
 </head>
 <body>
-<table class='review'>
-	<tr>
-		<td>
-			<a href="<%=request.getContextPath()%>/review/write.do">[게시글 쓰기]</a>
-	<tr class='review__tr'>
-		<td class='review__number'>번호</td>
-		<td class='review__title'>제목</td>
-		<td class='review__Writer'>작성자</td>
-		<td class='reivew__hit'>조회수</td>
-		<td class='review__regdate'>작성일</td>
-	</tr>
+<div id="review_contain">
+<a href="<%=request.getContextPath()%>/review/write.do">[후기 작성]</a>
 <c:if test="${reviewPage.hasNoReview()}">
-	<tr>
-		<td>게시글이 없습니다.</td>
-	</tr>
+후기가 없습니다.
 </c:if>
-<c:forEach var="review" items ="${reviewPage.content }">
+<c:forEach var="review" items ="${reviewPage.content}">
 	<ul>
-		<li>
-			<span>작성자 : ${review.writer}</span> <span>작성일 : ${review.regDate }</span>
+		<li class="review_title_contain">
+			<div class=review_title>${review.title}</div>
+			<span class='review_writer'>작성자 : ${review.writer}</span> 
+			<span class='review_regdate'>작성일 : 
+				<!-- value에 변경예정인 날짜를 넣고 pattern에 바꾸고 싶은 형식을 넣는다 -->
+				<fmt:formatDate value="${review.regDate}" pattern="yyyy-MM-dd" />
+			</span>
 		</li>
-		<li style="white-space:pre;">
-			이용후기 : ${review.content}
+		<li id="review_content_area">
+			<a href="<%=request.getContextPath()%>/review/modify.do?no=${review.number}">수정</a>
+			<div class='review_content'>이용후기 : ${review.content}</div>
 		</li>
 	</ul>
-	 <tr>
-		<td>${review.number}</td>
-		<td>
-		<!-- 읽기기능 구현 후 추가할 경로 -->
-			<a href="#">
-				<c:out value="${review.title}"/>
-			</a>
-		</td>
-		<td>${review.writer}</td>
-		<td>${review.readCount}</td>
-		<td>${review.regDate }</td>
-	</tr>
+	<hr/>
 </c:forEach>
 <c:if test="${reviewPage.hasReview()}">
-	<tr>
-		<td>
-			<c:if test = "${reviewPage.startPage > 5 }">
-				<a href="list.do?pageNo=${reviewPage.startPage -5 }">[이전]</a>
-			</c:if>
-			<c:forEach var ="pNo"
-				begin="${reviewPage.startPage}"
-				end="${reviewPage.endPage}">
-				<a href= "list.do?pageNo=${pNo}">[${pNo}]</a>
-			</c:forEach>
-			<c:if test="${reviewPage.endPage <reivewPage.totalPages}">
-			<a href="list.do?pageNo=${reviewPage.startPage + 5 }">[다음]</a>
-			</c:if>
-		</td>
-	</tr>
+	<div class="page_number_contain">
+		<c:if test = "${reviewPage.startPage > 5 }">
+			<a class="page_number" href="list.do?pageNo=${reviewPage.startPage -5 }">[이전]</a>
+		</c:if>
+		<c:forEach var ="pNo"
+			begin="${reviewPage.startPage}"
+			end="${reviewPage.endPage}">
+			<a class="page_number" href= "list.do?pageNo=${pNo}">${pNo}</a>
+		</c:forEach>
+		<c:if test="${reviewPage.endPage <reivewPage.totalPages}">
+			<a class="page_number" href="list.do?pageNo=${reviewPage.startPage + 5 }">[다음]</a>
+		</c:if>
+	</div>
 </c:if>
-	
-</table>
+</div>
 </body>
 </html>
