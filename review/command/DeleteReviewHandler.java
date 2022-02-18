@@ -1,6 +1,4 @@
 package review.command;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,18 +7,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import auth.service.User;
 import mvc.command.CommandHandler;
-import review.service.ModifyRequest;
-import review.service.ModifyReviewService;
+import review.service.DeleteRequest;
+import review.service.DeleteReviewService;
 import review.service.PermissionDeniedException;
 import review.service.ReadReviewService;
 import review.service.ReviewData;
 import review.service.ReviewNotFoundException;
 
-public class ModifyReviewHandler implements CommandHandler{
-	private static final String FORM_VIEW ="../view/product/reviewModify.jsp";
+public class DeleteReviewHandler implements CommandHandler{
+	private static final String FORM_VIEW="../view/product/reviewDelete.jsp";
 	
+	private DeleteReviewService deleteService = new DeleteReviewService();
 	private ReadReviewService readService = new ReadReviewService();
-	private ModifyReviewService modifyService = new ModifyReviewService();
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -33,22 +31,20 @@ public class ModifyReviewHandler implements CommandHandler{
 			return null;
 		}
 	}
-	
-	private String processForm(HttpServletRequest request,HttpServletResponse response)throws IOException{
+	private String processForm(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		try {
 			String noVal = request.getParameter("no");
-			//System.out.println("noVal="+noVal);
-			int no = Integer.parseInt(noVal);
+			int no =Integer.parseInt(noVal);
 			ReviewData reviewData = readService.getReview(no, false);
-			User authUser =(User) request.getSession().getAttribute("AUTHUSER");
-			if(!canModify(authUser, reviewData)) {
+			User authUser = (User) request.getSession().getAttribute("AUTHUSER");
+			if(!canDel(authUser,reviewData)) {
 				response.sendError(HttpServletResponse.SC_FORBIDDEN);
 				return null;
 			}
-			ModifyRequest modReq = new ModifyRequest(authUser.getId(),no,
+			DeleteRequest delReq = new DeleteRequest(authUser.getId(),no,
 					reviewData.getReview().getTitle(),
 					reviewData.getContent());
-			request.setAttribute("modReq",modReq);
+			request.setAttribute("delReq",delReq);
 			return FORM_VIEW;
 		}catch(ReviewNotFoundException e) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -56,29 +52,28 @@ public class ModifyReviewHandler implements CommandHandler{
 		}
 	}
 	
-	private boolean canModify(User authUser,ReviewData reviewData) {
+	private boolean canDel(User authUser,ReviewData reviewData) {
 		String writerId = reviewData.getReview().getWriter().getId();
 		return authUser.getId().equals(writerId);
 	}
-	private String processSubmit(HttpServletRequest request, HttpServletResponse response)throws Exception{
+	private String processSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User authUser = (User)request.getSession().getAttribute("AUTHUSER");
 		String noVal = request.getParameter("no");
 		int no = Integer.parseInt(noVal);
-		ModifyRequest modReq = new ModifyRequest(authUser.getId(),no,
+		DeleteRequest delReq = new DeleteRequest(authUser.getId(),no,
 				request.getParameter("title"),
 				request.getParameter("content"));
-		System.out.println("modReq="+modReq);
-		request.setAttribute("modReq", modReq);
+		request.setAttribute("delReq",delReq);
 		
 		Map<String,Boolean>errors = new HashMap<>();
 		request.setAttribute("errors", errors);
-		modReq.validate(errors);
+		delReq.validate(errors);
 		if(!errors.isEmpty()) {
 			return FORM_VIEW;
 		}
 		try {
-			modifyService.modify(modReq);
-			return "../view/product/modifySuccess.jsp";
+			deleteService.delete(delReq);
+			return "../view/product/deleteSuccess.jsp";
 		}catch(ReviewNotFoundException e) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return null;

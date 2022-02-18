@@ -23,17 +23,17 @@ public class ReviewDao {
 		Statement stmt= null;
 		ResultSet rs=null;
 		try {
-			//인서트 쿼리문을 이용해서 review테이블에  데이터를 삽입한다. r_no는 자동증가값으로 변경예정이라 나중에 값을 뺄 예정
+			//인서트 쿼리문을 이용해서 review테이블에  데이터를 삽입한다. 
 			
 			pstmt=conn.prepareStatement("insert into review "
-					+"(r_no,id,p_no,r_title,r_content,r_regdate,r_hit) "
-					+"values(review_no.nextval,?,review_no.nextval,?,?,?,?)");
+					+"(r_no,id,r_title,r_regdate,r_hit,r_content) "
+					+"values(no.nextval,?,?,sysdate,?,?)");
 			System.out.println("review"+review.getNumber());
 			pstmt.setString(1, review.getWriter().getId());
 			pstmt.setString(2,review.getTitle());
-			pstmt.setString(3, review.getContent());
-			pstmt.setTimestamp(4,toTimestamp(review.getRegDate()));
-			pstmt.setInt(5, review.getReadCount());
+			pstmt.setString(4, review.getContent());
+			/* pstmt.setTimestamp(4,toTimestamp(review.getRegDate())); */
+			pstmt.setInt(3, review.getReadCount());
 			int insertedCount = pstmt.executeUpdate();
 			System.out.println("insertedCount"+insertedCount);
 			if (insertedCount>0){
@@ -53,7 +53,8 @@ public class ReviewDao {
 							review.getTitle(),
 							review.getContent(),
 							review.getRegDate(),
-							0);
+							0,
+							review.getDelete());
 				}
 			}
 		
@@ -65,9 +66,10 @@ public class ReviewDao {
 			JdbcUtil.close(pstmt);
 		}
 	}
-	private Timestamp toTimestamp(Date date) {
-		return new Timestamp(date.getTime());
-	}
+	/*
+	 * private Timestamp toTimestamp(Date date) { return new
+	 * Timestamp(date.getTime()); }
+	 */
 	
 	/* review 테이블의 전체 레코드 수를 리턴 */
 	public int selectCount(Connection conn)throws SQLException{
@@ -100,6 +102,7 @@ public class ReviewDao {
 			 */
 			//limit는 mysql에서 사용 가능한 방식으로 오라클에서 비슷한 기능을 구현하기 위해선 아래와 같은 코드를 사용한다
 			//where num between 시작 and 끝 으로 표현을 하는 것이니 1번에 startRow 2번에  '끝-startRow=화면에 나타낼 양'이 된다
+			//ROW_NUMBER() OVER (ORDER BY r_no) 지정된 행의 순서대로 고유의 번호를 할당한다.
 			pstmt = conn.prepareStatement("select * from ("+
 										"SELECT ROW_NUMBER() OVER (ORDER BY r_no desc) NUM"+
 										",review.* "+
@@ -108,6 +111,7 @@ public class ReviewDao {
 										"WHERE NUM BETWEEN ? AND ?");
 			pstmt.setInt(1, startRow+1);
 			pstmt.setInt(2, size);
+			//select 문을 쓸 때는 executeQuery를 사용한다
 			rs = pstmt.executeQuery();
 			List<Review> result = new ArrayList<>(); 
 			while (rs.next()) {
@@ -128,7 +132,7 @@ public class ReviewDao {
 						/*,rs.getNString("name"))*/
 				null, rs.getNString("r_title"),
 				rs.getNString("r_content"), toDate(rs.getTimestamp("r_regDate")),
-				rs.getInt("r_hit"));
+				rs.getInt("r_hit"),rs.getNString("r_delete"));
 		
 	}
 	private Date toDate(Timestamp timestamp) {
@@ -172,5 +176,32 @@ public class ReviewDao {
 			pstmt.setInt(1, no);
 			pstmt.executeUpdate();
 		}
+	}
+	
+	//게시글 삭제기능
+	public int delete(Connection conn, int no) throws SQLException{
+		try (PreparedStatement pstmt = conn.prepareStatement("update "
+					+ "review set r_delete = 'Y' "
+					+ "where r_no = ?")){
+				pstmt.setInt(1, no);
+				return pstmt.executeUpdate();
+		}
+	}
+	public int deleteCount(Connection conn) throws SQLException{
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select count(*) from review where r_delete='Y'");
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+			return 0;
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(stmt);
+		}
+		
 	}
 }

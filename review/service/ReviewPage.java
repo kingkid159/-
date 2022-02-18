@@ -16,11 +16,11 @@ public class ReviewPage {
 	private int totalPages;
 	private int startPage;
 	private int endPage;
-	
 public ReviewPage(int total, int currentPage, int size, List<Review> content) {
 	this.total=total;
 	this.currentPage=currentPage;
 	this.content=content;
+	System.out.println("total="+total);
 	//게시글 개수가 0개이면, totalPages,startPage,endPage를 모두 0으로 할당
 	if(total ==0) {
 		totalPages = 0;
@@ -47,6 +47,7 @@ public ReviewPage(int total, int currentPage, int size, List<Review> content) {
 public int getTotal() {
 	return total;
 }
+
 public boolean hasNoReview() {
 
 	return total == 0;
