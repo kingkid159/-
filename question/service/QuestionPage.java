@@ -15,6 +15,7 @@ public QuestionPage(int total, int currentPage, int size, List<Question> content
 	this.total=total;
 	this.currentPage=currentPage;
 	this.content=content;
+	System.out.println("total="+total);
 	if(total == 0) {
 		totalPages = 0;
 		startPage = 0;

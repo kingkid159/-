@@ -18,6 +18,7 @@
 문의사항이 없습니다.
 </c:if>
 <c:forEach var="question" items = "${questionPage.content}">
+<c:if test="${question.delete.equals('N')}">
 <ul>
 	<li class="question_title_contain">
 		<div class='question_title'>${question.title}</div>
@@ -27,12 +28,14 @@
 		</span>
 	</li>
 	<li id="question_content_area">
+	<%-- <input type="hidden" name="no" value="${delReq.questionNumber}"> --%>
 		<a href="<%=request.getContextPath()%>/question/modify.do?no=${question.qNo}">수정</a>
-		<a href='#'>삭제</a>
+		<a href="<%=request.getContextPath()%>/question/delete.do?no=${question.qNo}">삭제</a>
 		<div class="question_content">이용후기 : ${question.content}</div>
 	</li>
 </ul>
 <hr/>
+</c:if>
 </c:forEach>
 <c:if test="${questionPage.hasQuestion()}">
 	<div class="page_number_contain">

@@ -123,4 +123,13 @@ public class QuestionDao {
 			JdbcUtil.close(pstmt);
 		}
 	}
+	public int delete(Connection conn, int no) throws SQLException{
+		try (
+			PreparedStatement pstmt = conn.prepareStatement("update question "
+					+ "set q_delete = 'Y' where q_no =? ")
+			){
+			pstmt.setInt(1, no);
+			return pstmt.executeUpdate();
+		}
+	}
 }
