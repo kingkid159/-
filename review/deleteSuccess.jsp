@@ -8,5 +8,6 @@
 </head>
 <body>
 <h2>삭제성공</h2>
+<%response.sendRedirect("list.do?p_no="+request.getParameter("p_no")); %>
 </body>
 </html>

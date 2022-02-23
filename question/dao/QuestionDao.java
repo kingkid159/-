@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import answer.model.Answer;
 import jdbc.JdbcUtil;
 import question.model.Question;
 
@@ -18,12 +19,13 @@ public class QuestionDao {
 		ResultSet rs = null;
 		try {
 			pstmt=conn.prepareStatement("insert into question "
-					+ "(q_no,id,q_title,q_content,q_regdate,q_hit,q_delete) "
-					+ "values(qno.nextval,?,?,?,sysdate,?,'N')");
+					+ "(q_no,id,q_title,q_content,q_regdate,q_hit,q_delete,p_no) "
+					+ "values(qno.nextval,?,?,?,sysdate,?,'N',?)");
 			pstmt.setString(1, question.getId());
 			pstmt.setNString(2, question.getTitle());
 			pstmt.setNString(3, question.getContent());
 			pstmt.setInt(4, question.getReadCount());
+			pstmt.setInt(5,question.getPno());
 			int insertedCount=pstmt.executeUpdate();
 			if (insertedCount>0) {
 				stmt=conn.createStatement();
@@ -45,25 +47,27 @@ public class QuestionDao {
 			JdbcUtil.close(pstmt);
 		}
 	}
-	public int selectCount(Connection conn)throws SQLException{
-		Statement stmt = null;
+	public int selectCount(Connection conn,int pno)throws SQLException{
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select count(*) from question where q_delete = 'N' ");
+			pstmt = conn.prepareStatement("select count(*) from question where q_delete = 'N' "
+					+ "and p_no=? ");
+			pstmt.setInt(1, pno);
+			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				return rs.getInt(1);
 			}
 			return 0;
 		}finally {
 			JdbcUtil.close(rs);
-			JdbcUtil.close(stmt);
+			JdbcUtil.close(pstmt);
 		}
 		
 	}
 	
-	public List<Question> select(Connection conn, int startRow, int size)
+	public List<Question> select(Connection conn, int startRow, int size, int pno)
 	throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -71,16 +75,22 @@ public class QuestionDao {
 			pstmt = conn.prepareStatement("select * from ("+
 					"SELECT ROW_NUMBER() OVER (ORDER BY q_no desc) NUM"+
 					",question.* "+
-					"FROM question "+
+					"FROM question "
+					+ "where q_delete ='N' and p_no=?"+
 					"ORDER BY q_no desc) "+
-					"WHERE q_delete = 'N' and NUM BETWEEN ? AND ?  ");
-			pstmt.setInt(1, startRow+1);
-			pstmt.setInt(2, size);
+					"WHERE p_no=? and q_delete = 'N' and NUM BETWEEN ? AND ?  ");
+			pstmt.setInt(1, pno);
+			pstmt.setInt(2, pno);
+			pstmt.setInt(3, startRow+1);
+			pstmt.setInt(4, size);
+			System.out.println("size="+size);
 			rs = pstmt.executeQuery();
 			List<Question> result = new ArrayList<>(); 
+			
 			while (rs.next()) {
 				result.add(convertQuestion(rs));
 			}
+			System.out.println("result"+result.size());
 			return result;
 		}finally {
 			JdbcUtil.close(rs);
@@ -132,4 +142,25 @@ public class QuestionDao {
 			return pstmt.executeUpdate();
 		}
 	}
+	public int aSelectCount(Connection conn,int ano)throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement("select count(*) from question where q_delete = 'N' "
+					+ "and p_no=? ");
+			pstmt.setInt(1, ano);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+			return 0;
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+		
+	}
+	
+	
 }

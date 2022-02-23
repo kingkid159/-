@@ -11,8 +11,10 @@
 
 </head>
 <body>			
+<% String pno=request.getParameter("p_no");%>
+<%= pno%>
 <!-- 작성해서보낼프로퍼티 -->
-<jsp:include page="../../../header.jsp" flush="false"/>
+
 <h1 class='title'>문의 작성</h1>
 	<form id='reviewW'action="./write.do" method='post'>
 		<div class='review_title'>제목
@@ -22,7 +24,7 @@
 		<div>
 			<span class='content'>내용:</span>
 			<textarea class='textarea'name="content" rows='10'cols='30'placeholder='내용을 입력하세요!'></textarea>
-			
+			<input type='hidden' name='p_no'value="<%=pno%>">
 		</div>
 		<input class='review_btn'type='submit' value='등록'/>
 		<button class='review_btn'>취소</button>

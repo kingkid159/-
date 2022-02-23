@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+.textarea{
+	width:500px;
+	height:500px;
+	resize:none;
+}
+
+.text{
+	width:500px;
+	height:30px;
+	margin:30px 0;
+
+}
+.content{
+	position:relative;
+	top:-490px;
+}
+.title{
+	margin-top:40px;
+}
+.review_btn{
+	padding:15px 25px;
+	background-color:var(--blue);
+	color:var(--white);
+	border-radius:4px;
+	border:1px soild var(--blue);	
+	margin-top:15px;
+	cursor:pointer;
+}

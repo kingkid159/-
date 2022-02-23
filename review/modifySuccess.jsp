@@ -8,5 +8,6 @@
 </head>
 <body>
 <H2>작성성공</H2>
+<%response.sendRedirect("list.do?p_no="+request.getParameter("p_no")); %>
 </body>
 </html>

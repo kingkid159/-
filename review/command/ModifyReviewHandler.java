@@ -17,7 +17,7 @@ import review.service.ReviewData;
 import review.service.ReviewNotFoundException;
 
 public class ModifyReviewHandler implements CommandHandler{
-	private static final String FORM_VIEW ="../view/product/reviewModify.jsp";
+	private static final String FORM_VIEW ="../view/product/review/reviewModify.jsp";
 	
 	private ReadReviewService readService = new ReadReviewService();
 	private ModifyReviewService modifyService = new ModifyReviewService();
@@ -57,7 +57,7 @@ public class ModifyReviewHandler implements CommandHandler{
 	}
 	
 	private boolean canModify(User authUser,ReviewData reviewData) {
-		String writerId = reviewData.getReview().getWriter().getId();
+		String writerId = reviewData.getReview().getwriter();
 		return authUser.getId().equals(writerId);
 	}
 	private String processSubmit(HttpServletRequest request, HttpServletResponse response)throws Exception{
@@ -78,7 +78,7 @@ public class ModifyReviewHandler implements CommandHandler{
 		}
 		try {
 			modifyService.modify(modReq);
-			return "../view/product/modifySuccess.jsp";
+			return "../view/product/review/modifySuccess.jsp";
 		}catch(ReviewNotFoundException e) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return null;

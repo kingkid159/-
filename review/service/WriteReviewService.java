@@ -1,5 +1,4 @@
 package review.service;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
@@ -8,7 +7,6 @@ import jdbc.JdbcUtil;
 import jdbc.connection.ConnectionProvider;
 import review.dao.ReviewDao;
 import review.model.Review;
-
 
 public class WriteReviewService {
 	private ReviewDao reviewDao = new ReviewDao();
@@ -54,7 +52,7 @@ public class WriteReviewService {
 	private Review toReview(WriteRequest request) {
 		// TODO Auto-generated method stub
 		Date now = new Date();
-		return new Review(0,request.getWriter(),0,request.getTitle(),request.getContent(),
+		return new Review(0,request.getWriter(),request.getPno(),request.getTitle(),request.getContent(),
 				now,0,null);
 	}
 

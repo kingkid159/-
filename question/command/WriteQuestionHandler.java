@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import auth.service.User;
 import mvc.command.CommandHandler;
-import question.model.Question;
 import question.service.WriteQuestionService;
 import question.service.WriteRequest;
 
@@ -33,19 +32,19 @@ public class WriteQuestionHandler implements CommandHandler{
 		Map<String,Boolean> errors = new HashMap<>();
 		request.setAttribute("errors", errors);
 		User user = (User)request.getSession(false).getAttribute("AUTHUSER");
-		WriteRequest writeReq = createWriteRequest(user,request);
+		String noVal = request.getParameter("p_no");
+		System.out.println("noVal"+noVal);
+		int no = Integer.parseInt(noVal);
+		WriteRequest writeReq = new WriteRequest(user.getId(),
+				request.getParameter("title"),
+				request.getParameter("content"),
+				no);
 		writeReq.validate(errors);
 		if(!errors.isEmpty()) {
 			return FORM_VIEW;
 		}
-		int newReviewNo = writeService.write(writeReq);
-		request.setAttribute("newReviewno",newReviewNo);
+		int newQuestionNo = writeService.write(writeReq);
+		request.setAttribute("newReviewno",newQuestionNo);
 		return "../view/product/qna/questionWriteSuc.jsp";
-	}
-	private WriteRequest createWriteRequest(User user, HttpServletRequest request) {
-		return new WriteRequest(
-				new Question(user.getId()),
-				request.getParameter("title"),
-				request.getParameter("content"));
 	}
 }

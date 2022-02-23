@@ -10,11 +10,14 @@
 </head>
 <body>
 <h2>삭제페이지</h2>
+<% String pno=request.getParameter("p_no");%>
+<%= pno%>
 <form action="<%=request.getContextPath()%>/review/delete.do" method="post">
 번호:${delReq.reviewNumber}
 <input type="hidden" name="no" value="${delReq.reviewNumber}">
 <input type="hidden" name="title" value="${delReq.title}">
 <input type="hidden" name="content" value="${delReq.content}">
+<input type='hidden' name='p_no'value="<%=pno%>">
 
 <input type="submit"value="삭제">
 </form>

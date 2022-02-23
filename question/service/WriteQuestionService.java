@@ -37,6 +37,6 @@ public class WriteQuestionService {
 	}
 	private Question toQuestion(WriteRequest req) {
 		Date now = new Date();
-		return new Question(0,req.getId(),0,req.getTitle(),req.getContent(),null,null);
+		return new Question(0,req.getId(),req.getPno(),req.getTitle(),req.getContent(),null,null);
 	}
 }

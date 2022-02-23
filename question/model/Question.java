@@ -13,6 +13,7 @@ public class Question {
 	private int readCount;
 	private String content;
 	private String delete;
+	private int ano;
 	
 	public Question(Integer qno, String id,Integer pno, String title, String content,String delete,Date regdate) {
 		this.regDate=regdate;
@@ -25,12 +26,19 @@ public class Question {
 		
 		
 	}
+	public Question(Integer ano,String id,String content,Date regdate,String delete) {
+		this.ano=ano;
+		this.id=id;
+		this.content=content;
+		this.delete=delete;
+		this.regDate=regdate;
+	}
 	public Question(String id) {
 		this.id=id;
 	}
 
 	public Integer getqNo() {
-		System.out.println("qNo="+qNo);
+		
 		return qNo;
 	}
 	public String getContent() {
@@ -38,6 +46,7 @@ public class Question {
 	}
 
 	public Integer getPno() {
+		System.out.println("pNo="+pno);
 		return pno;
 	}
 	public String getId() {
@@ -54,6 +63,9 @@ public class Question {
 	}
 	public String getDelete() {
 		return delete;
+	}
+	public int getAno(){
+		return ano;
 	}
 	@Override
 	public String toString() {

@@ -1,7 +1,10 @@
 package review.service;
 
+import java.sql.Connection;
 import java.util.List;
 
+import jdbc.connection.ConnectionProvider;
+import review.dao.ReviewDao;
 import review.model.Review;
 
 public class ReviewPage {
@@ -10,6 +13,9 @@ public class ReviewPage {
 	 * 게시글목록,totalPages는 전체페이지 개수보관 startPage아 endPage는 화면 하단에 보여줄 페이지 이동 링크의 시작 번호와
 	 * 끝번호를 저장한다
 	 */
+	ReviewDao reviewDao = new ReviewDao();
+	private int pno;
+	
 	private int total;
 	private int currentPage;
 	private List<Review> content;
@@ -20,7 +26,8 @@ public ReviewPage(int total, int currentPage, int size, List<Review> content) {
 	this.total=total;
 	this.currentPage=currentPage;
 	this.content=content;
-	System.out.println("total="+total);
+	
+	System.out.println("total111="+total);
 	//게시글 개수가 0개이면, totalPages,startPage,endPage를 모두 0으로 할당
 	if(total ==0) {
 		totalPages = 0;
@@ -49,8 +56,8 @@ public int getTotal() {
 }
 
 public boolean hasNoReview() {
-
-	return total == 0;
+	/* int deleteCount = reviewDao.deleteCount(conn); */
+	return total== 0;
 	
 }
 public boolean hasReview() {
@@ -70,6 +77,9 @@ public int getStartPage() {
 }
 public int getEndPage() {
 	return endPage;
+}
+public int getPno() {
+	return pno;
 }
 @Override
 public String toString() {

@@ -36,6 +36,6 @@ public class ModifyReviewService {
 		
 	}
 	private boolean canModify(String modfyingUserId, Review review) {
-		return review.getWriter().getId().contentEquals(modfyingUserId);
+		return review.getwriter().contentEquals(modfyingUserId);
 	}
 }

@@ -9,10 +9,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+<% String pno=request.getParameter("p_no");%>
+<%= pno%>
 <form action="<%=request.getContextPath()%>/review/modify.do" method="post">
 번호:${modReq.reviewNumber}
 <h1>수정 작성하는 곳</h1>
 <input type='hidden' name='no' value='${modReq.reviewNumber}'>
+<input type='hidden' name='p_no'value="<%=pno%>">
 <%-- <c:if test="${errors.title}">제목을 입력하세요</c:if> --%>
 <input type="text" name="title" value="${modReq.title}">
 <textarea name="content">${modReq.content}</textarea>

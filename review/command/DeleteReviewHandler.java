@@ -15,7 +15,7 @@ import review.service.ReviewData;
 import review.service.ReviewNotFoundException;
 
 public class DeleteReviewHandler implements CommandHandler{
-	private static final String FORM_VIEW="../view/product/reviewDelete.jsp";
+	private static final String FORM_VIEW="../view/product/review/reviewDelete.jsp";
 	
 	private DeleteReviewService deleteService = new DeleteReviewService();
 	private ReadReviewService readService = new ReadReviewService();
@@ -53,7 +53,7 @@ public class DeleteReviewHandler implements CommandHandler{
 	}
 	
 	private boolean canDel(User authUser,ReviewData reviewData) {
-		String writerId = reviewData.getReview().getWriter().getId();
+		String writerId = reviewData.getReview().getwriter();
 		return authUser.getId().equals(writerId);
 	}
 	private String processSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -73,7 +73,7 @@ public class DeleteReviewHandler implements CommandHandler{
 		}
 		try {
 			deleteService.delete(delReq);
-			return "../view/product/deleteSuccess.jsp";
+			return "../view/product/review/deleteSuccess.jsp";
 		}catch(ReviewNotFoundException e) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return null;

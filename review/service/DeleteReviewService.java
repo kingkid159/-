@@ -36,7 +36,7 @@ public class DeleteReviewService {
 	}
 	private boolean canDelete(String delUserId, Review review) {
 		System.out.println("delUserId="+delUserId);
-		return review.getWriter().getId().contentEquals(delUserId);
+		return review.getwriter().contentEquals(delUserId);
 	}
 
 }

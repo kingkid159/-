@@ -2,20 +2,24 @@ package review.service;
 
 import java.util.Map;
 
-import review.model.Writer;
 
 public class WriteRequest {
 	//게시글 쓰는데 필요한 작성자,제목,내용 데이터 정의
-	private Writer writer;
+	private String id;
 	private String title;
 	private String content;
-	public WriteRequest(Writer writer,String title, String content) {
-		this.writer = writer;
-		this.title = title;
+	private int productNumber;
+	public WriteRequest(String id,String title, String content,int productNumber) {
+		this.id = id;
+		this.title =	title;
 		this.content = content;
+		this.productNumber=productNumber;
 	}
-	public Writer getWriter() {
-		return writer;
+	public int getPno() {
+		return productNumber;
+	}
+	public String getWriter() {
+		return id;
 	}
 	public String getTitle() {
 		return title;

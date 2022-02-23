@@ -10,6 +10,6 @@
 </head>
 <body>
 <h2>믄의사항 변경 성공</h2>
-<a href="<%=request.getContextPath()%>/question/list.do">목록으로 가기</a>
+<%response.sendRedirect("list.do?p_no="+request.getParameter("p_no")); %>
 </body>
 </html>

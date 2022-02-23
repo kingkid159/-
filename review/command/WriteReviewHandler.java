@@ -8,12 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import auth.service.User;
 import mvc.command.CommandHandler;
-import review.model.Writer;
 import review.service.WriteRequest;
 import review.service.WriteReviewService;
 
 public class WriteReviewHandler implements CommandHandler{ 
-	private static final String FORM_VIEW = "../view/product/reviewWrite.jsp";
+	private static final String FORM_VIEW = "../view/product/review/reviewWrite.jsp";
 	private WriteReviewService writeService = new WriteReviewService();
 	
 	@Override
@@ -36,9 +35,16 @@ public class WriteReviewHandler implements CommandHandler{
 		
 		//세션에서 로그인한 사용자 정보를 구한다
 		User user = (User)request.getSession(false).getAttribute("AUTHUSER");
+		String noVal = request.getParameter("p_no");
+		System.out.println("noVal"+noVal);
+		int no = Integer.parseInt(noVal);
+		WriteRequest writeReq = new WriteRequest(user.getId(),
+				request.getParameter("title"),
+				request.getParameter("content"),
+				no);
+		request.setAttribute("modReq", writeReq);
 		System.out.println("sssession"+user);
 		//user와 HttpServeltRequest를 이용해서 WriteRequest객체 생성
-		WriteRequest writeReq = createWriteRequest(user,request);
 		//writeReq객체가 유효한지 검사
 		writeReq.validate(errors);
 		//에러가 있을경우 보여줄 페이지
@@ -50,13 +56,6 @@ public class WriteReviewHandler implements CommandHandler{
 		//새 글의 ID를 request의 newReviewID 속성에 저장 처리결과는 return값으로 보내주기
 		request.setAttribute("newReviewNo",newReviewNo);
 		
-		return "../view/product/reviewWriteSuc.jsp";
-	}
-	private WriteRequest createWriteRequest(User user, HttpServletRequest request) {
-		System.out.println("userid="+user);
-		return new WriteRequest(
-				new Writer(user.getId()),
-				request.getParameter("title"),
-				request.getParameter("content"));
+		return "../view/product/review/reviewWriteSuc.jsp";
 	}
 }

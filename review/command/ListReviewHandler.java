@@ -14,14 +14,18 @@ public class ListReviewHandler implements CommandHandler{
 	public String process(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		String pageNoVal = request.getParameter("pageNo");
+		String strPno = request.getParameter("p_no");
+		int pno = Integer.parseInt(strPno);
+		System.out.println("pnoL="+pno);
 		int pageNo =1;
 		if(pageNoVal != null) {
 			pageNo =Integer.parseInt(pageNoVal);
 			
 		}
-		ReviewPage reviewPage = listService.getReviewPage(pageNo);
+		ReviewPage reviewPage = listService.getReviewPage(pageNo,pno);
+		
 		request.setAttribute("reviewPage",reviewPage);
-		return "../view/product/reviewList.jsp";
+		return "../view/product/review/reviewList.jsp";
 		
 	}
 

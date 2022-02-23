@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Review {
 	private Integer number;
-	private Writer writer;
+	private String writer;
 	private String title;
 	private Date regDate;
 	private Integer pno;
@@ -13,7 +13,7 @@ public class Review {
 	private String content;
 	private String delete;
 	
-	public Review(Integer number, Writer writer,Integer pno, String title, String content,Date regDate,int readCount,String delete) {
+	public Review(Integer number, String writer,Integer pno, String title, String content,Date regDate,int readCount,String delete) {
 		
 		this.number=number;
 		this.writer=writer;
@@ -27,6 +27,7 @@ public class Review {
 	
 
 	public Integer getNumber() {
+		System.out.println("number"+number);
 		return number;
 	}
 	public String getContent() {
@@ -34,9 +35,10 @@ public class Review {
 	}
 
 	public Integer getPno() {
+		System.out.println("pno="+pno);
 		return pno;
 	}
-	public Writer getWriter() {
+	public String getwriter() {
 		return writer;
 	}
 	public String getTitle() {

@@ -9,7 +9,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%=request.getParameter("p_no") %>
 <h2>문의사항 작성 완료</h2>
-<a href="<%=request.getContextPath()%>/question/list.do">문의목록으로</a>
+<%response.sendRedirect("list.do?p_no="+request.getParameter("p_no")); %>	
 </body>
 </html>
