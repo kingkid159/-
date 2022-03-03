@@ -16,6 +16,11 @@
 ul{
 	list-style:none;
 }
+.ul{
+	list-style:none;
+	border:1px solid black;
+	width:510px;
+}
 a{
 	text-decoration:none;
 }
@@ -23,10 +28,10 @@ a{
 	margin:120px 140px;
 }
 #question_content_area{
-	white-space:pre;
+	white-space:pre-line;
 }
 #review_content_area{
-	white-space:pre;
+	white-space:pre-line;
 }
 #review_contain{
 	margin:120px 140px;
@@ -41,6 +46,16 @@ a{
 	bottom:-30px;
 	position:relative;
 }
+.wBTN1{
+	font-size:var(--font-large);
+	margin:28px 12px 0 12px;
+	color:var(--red);
+	border:1px solid var(--red);
+	padding:8px 10px;
+	border-radius:4px;
+	bottom:-0px;
+	position:relative;
+}
 .title_contain{
 	margin-top:60px;
 }
@@ -49,6 +64,14 @@ a{
 	font-size:var(--font-large);
 	margin-bottom:20px;
 	color:var(--blue);
+}
+h2{
+	margin:auto;
+	padding:15px;
+	text-align:center;
+	color:#6acf1d;
+	border:solid 1px;
+	width:150px;
 }
 .regdate{
 	font-size:var(--font-regular);
@@ -80,14 +103,13 @@ a{
 	display:flex;
 	position:relative;
 	top:-25px;
-	right:-60px;
+	right:-300px;
 }
 .mdaBTN{
 	font-size:var(--font-regular);
-	margin:0 12px;
+	margin:0 5px;
 	color:var(--red);
 	border:1px solid var(--red);
-	padding:8px 10px;
+	padding:5px 10px;
 	border-radius:4px;
 }
-

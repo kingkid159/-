@@ -49,6 +49,11 @@
 	border-radius:4px;
 	color:var(--blue);
 }
-#qna_contain{
-background: url('./img/backgroundImg.png') center/cover ;
+.listBTN{
+	color:var(--red);
+	border:1px solid var(--red);
+	border-radius:4px;
+	text-decoration:none;
+	padding:8px 10px;
+	margin:10px;
 }

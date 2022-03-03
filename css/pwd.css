@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+body {
+}
+
+#pwd{
+	border:1px solid #5e6f73;
+	width:600px;
+	height:400px;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	margin:auto;
+	margin-top:65px;
+	background-color:#242424;
+}
+
+
+.pwdcontain{
+	display:flex;
+	height:400px;
+}
+.kate{
+	margin-top:33px;
+	color:white;
+	margin-left:100px;
+	width:100px;
+	
+}
+
+#password{
+ 	width:250px;
+	height:30px;
+	margin-top:22px;
+	margin-left:12px;
+	padding-left:10px;
+	background-color:
+white
+;
+}
+
+#loginbtn{
+	background-color:#4285f4;
+	border:1px solid #4285f4;
+	border-radius:4px;
+	color:white;
+	width:365px;
+	height:100px;
+	margin-bottom:50px;
+	cursor:pointer;
+	
+}
+
+a{
+	margin-top:33px;
+	color:white;
+}
+
+.imgcontainer__img{
+	width:250px;
+	hetight:170px;
+	float:left;
+	margin-top:40px;
+	margin-bottom:30px;
+}

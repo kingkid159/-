@@ -1,0 +1,213 @@
+#mypage{
+	border:1px solid #5e6f73;
+	width:600px;
+	height:750px;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	margin:auto;
+	margin-top:0px;
+	background-color:#242424;
+	
+}
+
+#return{
+	background-color:#4285f4;
+	border:1px solid #4285f4;
+	border-radius:4px;
+	color:white;
+	width:200px;
+	height:45px;
+	cursor:pointer;
+	
+}
+#return:hover{
+	opacity:0.8;
+}
+
+#changepassword{
+	background-color:#4285f4;
+	border:1px solid #4285f4;
+	border-radius:4px;
+	color:white;
+	width:200px;
+	height:45px;
+	margin:auto;
+	cursor:pointer;
+	
+	
+}
+#changepassword:hover{
+	opacity:0.8;
+}
+
+#home{
+	background-color:#fa0598;
+
+	border:1px solid #fa0598;
+
+	border-radius:4px;
+	color:white;
+	width:200px;
+	height:45px;
+	margin:auto;
+	cursor:pointer;
+	
+	
+}
+#home:hover{
+	opacity:0.8;
+}
+
+.imgcontainer__img{
+	width:250px;
+	hetight:170px;
+	float:left;
+	margin-bottom:40px;
+}
+
+
+.kate{
+	margin-top:33px;
+	color:white;
+	width:100px;
+	height:29px;
+	margin-left:120px;
+	
+}
+
+
+#id{
+	width:250px;
+	height:30px;
+	margin-top:27px;
+	margin-left:12px;
+	padding-left:10px;
+	background-color:
+white
+;
+	border-radius:4px;
+	border:1px solid 
+#74898f
+;
+	color:black;
+}
+
+
+#password{
+	width:250px;
+	height:30px;
+	margin-top:27px;
+	margin-left:12px;
+	padding-left:10px;
+	background-color:
+white
+;
+	border-radius:4px;
+	border:1px solid 
+#74898f
+;
+	color:black;
+}
+
+#name{
+	width:250px;
+	height:30px;
+	margin-top:27px;
+	margin-left:12px;
+	padding-left:10px;
+	background-color:
+white
+;
+	border-radius:4px;
+	border:1px solid 
+#74898f
+;
+	color:black;
+}
+
+#birth{
+	width:250px;
+	height:30px;
+	margin-top:27px;
+	margin-left:12px;
+	padding-left:10px;
+	background-color:
+white
+;
+	border-radius:4px;
+	border:1px solid 
+#74898f
+;
+	color:black;
+}
+
+#gender{
+	width:250px;
+	height:30px;
+	margin-top:27px;
+	margin-left:12px;
+	padding-left:10px;
+	background-color:
+white
+;
+	border-radius:4px;
+	border:1px solid 
+#74898f
+;
+	color:black;
+}
+
+#email{
+	width:250px;
+	height:30px;
+	margin-top:27px;
+	margin-left:12px;
+	padding-left:10px;
+	background-color:
+white
+;
+	border-radius:4px;
+	border:1px solid 
+#74898f
+;
+	color:black;
+}
+
+#phone{
+	width:250px;
+	height:30px;
+	margin-top:27px;
+	margin-left:12px;
+	padding-left:10px;
+	background-color:
+white
+;
+	border-radius:4px;
+	border:1px solid 
+#74898f
+;
+	color:black;
+}
+
+#address{
+	width:250px;
+	height:30px;
+	margin-top:27px;
+	margin-left:12px;
+	padding-left:10px;
+	background-color:
+white
+;
+	border-radius:4px;
+	border:1px solid 
+#74898f
+;
+	color:black;
+}
+
+.contain{
+	display:flex;
+}
+
