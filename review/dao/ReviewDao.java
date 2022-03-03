@@ -27,7 +27,7 @@ public class ReviewDao {
 			
 			pstmt=conn.prepareStatement("insert into review "
 					+"(r_no,id,r_title,r_regdate,r_hit,r_content,p_no) "
-					+"values(no.nextval,?,?,sysdate,?,?,?)");
+					+"values(rno.nextval,?,?,sysdate,?,?,?)");
 			System.out.println("review"+review.getNumber());
 			pstmt.setString(1, review.getwriter());
 			pstmt.setString(2,review.getTitle());
