@@ -7,19 +7,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet"href="<%=request.getContextPath() %>/css/Write.css?ver=2">
 </head>
 <body>
 <% String pno=request.getParameter("p_no");%>
-<%= pno%>
-<form action="<%=request.getContextPath()%>/review/modify.do" method="post">
-번호:${modReq.reviewNumber}
-<h1>수정 작성하는 곳</h1>
-<input type='hidden' name='no' value='${modReq.reviewNumber}'>
-<input type='hidden' name='p_no'value="<%=pno%>">
-<%-- <c:if test="${errors.title}">제목을 입력하세요</c:if> --%>
-<input type="text" name="title" value="${modReq.title}">
-<textarea name="content">${modReq.content}</textarea>
-<input type="submit" value="글 수정">
-</form>
+<h1 class='title'>후기 수정</h1>
+	<form id='reviewM' action="<%=request.getContextPath()%>/review/modify.do" method="post">
+		
+	<%-- <c:if test="${errors.title}">제목을 입력하세요</c:if> --%>
+		<div class='review_title'>제목:
+			<input type="text" class='text' name="title" value="${modReq.title}">
+		</div>	
+		<div>	
+			<span class='content'>내용:</span>	
+			<input type='hidden' name='no' value='${modReq.reviewNumber}'>
+			<input type='hidden' name='p_no'value="<%=pno%>">
+			<textarea class='textarea' name="content">${modReq.content}</textarea>
+		</div>
+		<input type="submit" class='reviewM_btn' value="글 수정">
+	</form>
 </body>
 </html>

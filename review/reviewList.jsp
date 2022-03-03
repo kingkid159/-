@@ -13,9 +13,10 @@
 <link rel='stylesheet' href='<%=request.getContextPath()%>/css/list.css?ver=2'>
 </head>
 <body>
+<h2>한 줄 리뷰</h2>
 <% String pno=request.getParameter("p_no");%>
 <div id="review_contain">
-<a class='wBTN' href='<%=request.getContextPath()%>/review/write.do?p_no=<%=pno %>'>후기 작성</a>
+<a class='wBTN' href='<%=request.getContextPath()%>/review/write.do?p_no=<%=pno %>&pageNo=${reviewPage.currentPage}'>후기 작성</a>
 <c:if test="${reviewPage.hasNoReview()}">
 후기가 없습니다.
 </c:if>
